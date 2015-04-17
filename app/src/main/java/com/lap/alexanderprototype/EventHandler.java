@@ -7,6 +7,7 @@ import com.lap.alexanderprototype.event.Event;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,21 +36,31 @@ public class EventHandler {
     public void addEventActionPair(EventActionPair eventActionPair) {
         Log.d("EventHandler", "Adding event action pair " + eventActionPair);
         this.eventActionPairs.add(eventActionPair);
+        Event event = eventActionPair.getEvent();
+        if(event != null) {
+            event.register();
+        }
     }
 
     public List<EventActionPair> getEventActionPairs() {
         return this.eventActionPairs;
     }
 
-    public void removeEventActionPair(Event event, Action action) {
-        this.eventActionPairs.remove(new EventActionPair(event, action));
+    public void removeAllEventActionPairs() {
+        for(Iterator<EventActionPair> iter = this.eventActionPairs.iterator(); iter.hasNext();) {
+            EventActionPair eventActionPair = iter.next();
+            eventActionPair.getEvent().unRegister();
+            iter.remove();
+        }
     }
 
     public void triggerEvent(Event event) {
         synchronized (this.eventActionPairs) {
             for (EventActionPair eventActionPair : this.eventActionPairs) {
                 if (event.equals(eventActionPair.getEvent())) {
-                    eventActionPair.getAction().commit();
+                    Action action = eventActionPair.getAction();
+                    Log.d("EventHandler", "Triggered " + event + ", committing " + action);
+                    action.commit();
                 }
             }
         }

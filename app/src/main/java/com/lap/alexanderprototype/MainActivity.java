@@ -21,7 +21,6 @@ import java.util.Set;
 
 
 public class MainActivity extends Activity {
-    private SensorManager sensorManager;
     private EventActionPairArrayAdapter eventActionListAdapter;
 
     @Override
@@ -29,8 +28,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d("MainActivity", "Running onCreate");
-
-        this.sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
 
         initializeEventActionArrayView();
 
@@ -72,7 +69,10 @@ public class MainActivity extends Activity {
         @Override
         public void onClick(View v) {
             EventHandler.getSingleton().addEventActionPair(
-                    new EventActionPair(new ShakeEvent(sensorManager), new MusicPlayerNextAction())
+                    new EventActionPair(
+                            new ShakeEvent(AlexanderPrototype.getSingleton().getSensorManager()),
+                            new MusicPlayerNextAction()
+                    )
             );
             eventActionListAdapter.notifyDataSetChanged();
         }

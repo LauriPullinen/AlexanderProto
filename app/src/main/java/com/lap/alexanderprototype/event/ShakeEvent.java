@@ -15,7 +15,7 @@ public class ShakeEvent extends SensorEvent {
     private long lastUpdate;
 
     private static final int MIN_SHAKE_DELAY = 500;
-    private static final double SHAKE_THRESHOLD = 3.0;
+    private static final double SHAKE_THRESHOLD = 2.0;
 
     public ShakeEvent(SensorManager manager) {
         super(manager, manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
@@ -39,6 +39,8 @@ public class ShakeEvent extends SensorEvent {
                         square(y - this.lastY) +
                         square(z - this.lastZ)) / (currentTime - this.lastUpdate);
                 if(shakeSpeed > SHAKE_THRESHOLD) {
+                    Log.d("ShakeEvent", String.format("Shake speed: %.2f threshold: %.2f",
+                            shakeSpeed, SHAKE_THRESHOLD));
                     this.trigger();
                     this.lastShake = currentTime;
                 }
