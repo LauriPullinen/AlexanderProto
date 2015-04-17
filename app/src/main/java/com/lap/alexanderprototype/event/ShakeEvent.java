@@ -52,6 +52,11 @@ public class ShakeEvent extends SensorEvent {
         this.lastUpdate = currentTime;
     }
 
+    @Override
+    public String toString() {
+        return String.format("ShakeEvent %.2f,%.2f,%.2f", this.lastX, this.lastY, this.lastZ);
+    }
+
     private float square(float number) {
         return number * number;
     }

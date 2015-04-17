@@ -1,17 +1,22 @@
 package com.lap.alexanderprototype;
 
+import android.util.Log;
+
 import com.lap.alexanderprototype.action.Action;
 import com.lap.alexanderprototype.event.Event;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Created by Lauri on 8.4.2015.
  */
 public class EventHandler {
-    private Set<EventActionPair> eventActionPairs;
+    // Using list instead of set since the Adapters work well with lists
+    private List<EventActionPair> eventActionPairs;
 
     private static EventHandler singleton;
 
@@ -20,15 +25,20 @@ public class EventHandler {
     }
 
     private EventHandler() {
-        this.eventActionPairs = Collections.synchronizedSet(new TreeSet<EventActionPair>());
+        this.eventActionPairs = Collections.synchronizedList(new ArrayList<EventActionPair>());
     }
 
     public static EventHandler getSingleton() {
         return singleton;
     }
 
-    public void addEventActionPair(Event event, Action action) {
-        this.eventActionPairs.add(new EventActionPair(event, action));
+    public void addEventActionPair(EventActionPair eventActionPair) {
+        Log.d("EventHandler", "Adding event action pair " + eventActionPair);
+        this.eventActionPairs.add(eventActionPair);
+    }
+
+    public List<EventActionPair> getEventActionPairs() {
+        return this.eventActionPairs;
     }
 
     public void removeEventActionPair(Event event, Action action) {
@@ -42,24 +52,6 @@ public class EventHandler {
                     eventActionPair.getAction().commit();
                 }
             }
-        }
-    }
-
-    private static class EventActionPair {
-        private Event event;
-        private Action action;
-
-        public EventActionPair(Event event, Action action) {
-            this.event = event;
-            this.action = action;
-        }
-
-        public Event getEvent() {
-            return event;
-        }
-
-        public Action getAction() {
-            return action;
         }
     }
 }
