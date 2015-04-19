@@ -34,7 +34,6 @@ public class EventHandler {
     }
 
     public void addEventActionPair(EventActionPair eventActionPair) {
-        Log.d("EventHandler", "Adding event action pair " + eventActionPair);
         this.eventActionPairs.add(eventActionPair);
         Event event = eventActionPair.getEvent();
         if(event != null) {
@@ -54,13 +53,26 @@ public class EventHandler {
         }
     }
 
+    public void setAction(int i, Action action) {
+        this.getEventActionPairs().get(i).setAction(action);
+    }
+
+    public void setEvent(int i, Event event) {
+        event.register();
+        this.getEventActionPairs().get(i).setEvent(event);
+    }
+
     public void triggerEvent(Event event) {
         synchronized (this.eventActionPairs) {
             for (EventActionPair eventActionPair : this.eventActionPairs) {
                 if (event.equals(eventActionPair.getEvent())) {
                     Action action = eventActionPair.getAction();
-                    Log.d("EventHandler", "Triggered " + event + ", committing " + action);
-                    action.commit();
+                    if(action != null) {
+                        Log.d("EventHandler", "Triggered " + event + ", committing " + action);
+                        action.commit();
+                    } else {
+                        Log.d("EventHandler", "Triggered " + event + " with null action");
+                    }
                 }
             }
         }

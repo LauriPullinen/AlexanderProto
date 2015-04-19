@@ -8,6 +8,8 @@ import android.hardware.SensorManager;
  */
 public class AlexanderPrototype extends Application {
     private SensorManager sensorManager;
+    private int chosenEvent;
+    private int chosenAction;
 
     private static AlexanderPrototype singleton;
 
@@ -17,6 +19,14 @@ public class AlexanderPrototype extends Application {
 
     public SensorManager getSensorManager() {
         return sensorManager;
+    }
+
+    public int getChosenEvent() {
+        return chosenEvent;
+    }
+
+    public int getChosenAction() {
+        return chosenAction;
     }
 
     @Override
@@ -30,5 +40,13 @@ public class AlexanderPrototype extends Application {
     public void onTerminate() {
         super.onTerminate();
         EventHandler.getSingleton().removeAllEventActionPairs();
+    }
+
+    public void setChosenAction(int chosenAction) {
+        this.chosenAction = chosenAction;
+    }
+
+    public void setChosenEvent(int chosenEvent) {
+        this.chosenEvent = chosenEvent;
     }
 }

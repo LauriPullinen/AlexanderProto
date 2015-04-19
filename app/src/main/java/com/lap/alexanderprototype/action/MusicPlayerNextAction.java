@@ -8,6 +8,8 @@ import android.os.IBinder;
 import android.view.KeyEvent;
 
 import com.lap.alexanderprototype.AlexanderPrototype;
+import com.lap.alexanderprototype.R;
+import com.lap.alexanderprototype.UIListItem;
 
 /**
  * Created by lauripullinen on 15-4-13.
@@ -24,6 +26,11 @@ public class MusicPlayerNextAction implements Action {
                     new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_MEDIA_NEXT));
             context.sendOrderedBroadcast(skipIntent, null);
         }
+    }
+
+    @Override
+    public UIListItem getUIListItem() {
+        return Actions.MUSIC_PLAYER_NEXT;
     }
 
     @Override
