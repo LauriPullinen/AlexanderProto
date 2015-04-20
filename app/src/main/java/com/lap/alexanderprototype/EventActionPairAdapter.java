@@ -48,15 +48,13 @@ public class EventActionPairAdapter extends ArrayAdapter<EventActionPair> {
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlexanderPrototype.getSingleton().setChosenAction(position);
-                mainActivity.moveToActionList();
+                mainActivity.moveToActionList(position);
             }
         });
         eventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlexanderPrototype.getSingleton().setChosenEvent(position);
-                mainActivity.moveToEventList();
+                mainActivity.moveToEventList(position);
             }
         });
 

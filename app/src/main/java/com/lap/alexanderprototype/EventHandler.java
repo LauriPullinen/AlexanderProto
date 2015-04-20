@@ -62,6 +62,16 @@ public class EventHandler {
         this.getEventActionPairs().get(i).setEvent(event);
     }
 
+    public void setItem(int i, Object item) {
+        if(item instanceof Event) {
+            this.setEvent(i, (Event) item);
+        } else if(item instanceof Action) {
+            this.setAction(i, (Action) item);
+        } else {
+            Log.e("EventHandler", "Unidentified item " + item);
+        }
+    }
+
     public void triggerEvent(Event event) {
         synchronized (this.eventActionPairs) {
             for (EventActionPair eventActionPair : this.eventActionPairs) {

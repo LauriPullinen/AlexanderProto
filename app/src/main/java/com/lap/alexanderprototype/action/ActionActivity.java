@@ -16,61 +16,29 @@ import com.lap.alexanderprototype.MainActivity;
 import com.lap.alexanderprototype.R;
 import com.lap.alexanderprototype.UIListAdapter;
 import com.lap.alexanderprototype.UIListItem;
+import com.lap.alexanderprototype.UIListItemActivity;
 import com.lap.alexanderprototype.event.Event;
 import com.lap.alexanderprototype.event.Events;
 
-public class ActionActivity extends ActionBarActivity {
-    private UIListAdapter adapter;
+import java.util.List;
 
-    public void moveToMain() {
-        Intent moveIntent = new Intent(ActionActivity.this, MainActivity.class);
-        startActivity(moveIntent);
+public class ActionActivity extends UIListItemActivity {
+    public ActionActivity() {
+        super(Actions.getAll(), AlexanderPrototype.CHOSEN_ACTION);
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_actions);
-
-        this.adapter = new UIListAdapter(this,
-                android.R.layout.simple_list_item_1,
-                Actions.getAll(),
-                R.layout.action);
-
-        ListView listView = (ListView) findViewById(R.id.action_list);
-        listView.setAdapter(this.adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                UIListItem item = adapter.getItem(position);
-                EventHandler.getSingleton().setAction(AlexanderPrototype.getSingleton().getChosenAction(),
-                        (Action) item.getItem());
-                moveToMain();
-            }
-        });
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_action, menu);
-        return true;
+    protected View getView() {
+        return findViewById(R.id.action_list);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent action in AndroidManifest.xml.
-        int id = item.getItemId();
+    protected int getContentViewID() {
+        return R.layout.activity_actions;
+    }
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    @Override
+    protected int getItemViewID() {
+        return R.layout.action;
     }
 }

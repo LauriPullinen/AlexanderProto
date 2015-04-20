@@ -18,13 +18,15 @@ import com.lap.alexanderprototype.event.ShakeEvent;
 public class MainActivity extends Activity {
     private EventActionPairAdapter eventActionListAdapter;
 
-    public void moveToActionList() {
+    public void moveToActionList(int position) {
         Intent moveIntent = new Intent(MainActivity.this, ActionActivity.class);
+        moveIntent.putExtra(AlexanderPrototype.CHOSEN_ACTION, position);
         startActivity(moveIntent);
     }
 
-    public void moveToEventList() {
+    public void moveToEventList(int position) {
         Intent moveIntent = new Intent(MainActivity.this, EventActivity.class);
+        moveIntent.putExtra(AlexanderPrototype.CHOSEN_EVENT, position);
         startActivity(moveIntent);
     }
 
